@@ -257,7 +257,7 @@ button{ font-family: inherit; cursor: pointer; }
   .nav-phone{ display: none; }
 }
 @media (max-width: 980px){
-  .nav-links, .nav-cta .nav-phone{ display: none; }
+  .nav-links, .nav-cta{ display: none; }
   .nav-toggle{ display: flex; }
   .brand-tag{ display: none; }
 }
@@ -382,9 +382,14 @@ button{ font-family: inherit; cursor: pointer; }
   z-index: 1;
   display: grid;
   grid-template-columns: 1.25fr 0.75fr;
-  gap: 40px;
+  grid-template-areas: "text art" "trust art";
+  column-gap: 40px;
+  row-gap: 10px;
   align-items: center;
 }
+.hero-grid > [data-reveal-group]{ grid-area: text; }
+.hero-art{ grid-area: art; }
+.hero-grid .hero-trust{ grid-area: trust; }
 .hero .eyebrow{ margin-bottom: 0.7em; }
 .hero h1{ margin-bottom: 0.28em; font-size: clamp(2.2rem, 4.4vw, 3.6rem); }
 .hero-word{
@@ -1038,14 +1043,8 @@ button{ font-family: inherit; cursor: pointer; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 980px){
-  .hero-grid{ grid-template-columns: 1fr; }
-  .hero-grid > [data-reveal-group]{ display: contents; }
-  .hero-grid .eyebrow{ order: 1; }
-  .hero-grid h1{ order: 2; }
-  .hero-grid .hero-lede{ order: 3; }
-  .hero-grid .hero-ctas{ order: 4; }
-  .hero-art{ order: 5; max-width: 280px; margin: 20px auto; transform: none; }
-  .hero-grid .hero-trust{ order: 6; }
+  .hero-grid{ grid-template-columns: 1fr; grid-template-areas: "text" "art" "trust"; row-gap: 4px; }
+  .hero-art{ max-width: 280px; margin: 20px auto; transform: none; }
   .card-grid{ grid-template-columns: 1fr 1fr; }
   .footer-grid{ grid-template-columns: 1fr 1fr; }
   .contact-grid{ grid-template-columns: 1fr; }
