@@ -124,22 +124,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* Mobile nav toggle */
-  const header = document.querySelector('.site-header');
+  /* Mobile nav drawer */
   const toggle = document.querySelector('.nav-toggle');
-  if (toggle && header) {
+  const mobileNav = document.querySelector('.mobile-nav');
+  const mobileNavClose = document.querySelector('.mobile-nav-close');
+  if (toggle && mobileNav) {
+    const openMenu = () => {
+      mobileNav.classList.add('is-open');
+      toggle.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeMenu = () => {
+      mobileNav.classList.remove('is-open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
     toggle.addEventListener('click', () => {
-      const open = header.classList.toggle('menu-open');
-      toggle.classList.toggle('open', open);
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      document.body.style.overflow = open ? 'hidden' : '';
+      mobileNav.classList.contains('is-open') ? closeMenu() : openMenu();
     });
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        header.classList.remove('menu-open');
-        toggle.classList.remove('open');
-        document.body.style.overflow = '';
-      });
+    mobileNavClose?.addEventListener('click', closeMenu);
+    mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
     });
   }
 
@@ -243,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* Active nav link */
   const path = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a').forEach(link => {
+  document.querySelectorAll('.nav-links a, .mobile-nav-list a').forEach(link => {
     const href = link.getAttribute('href');
     if (href === path || (path === '' && href === 'index.html')) {
       link.classList.add('active');
